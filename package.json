@@ -1,0 +1,20 @@
+{
+  "name": "n-queens-genetic-algorithm",
+  "version": "1.0.0",
+  "description": "Repository for a solver for the n queen problems using a genetic algorithm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Diezaztek/n-queens-genetic-algorithm.git"
+  },
+  "author": "Diezaztek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Diezaztek/n-queens-genetic-algorithm/issues"
+  },
+  "homepage": "https://github.com/Diezaztek/n-queens-genetic-algorithm#readme"
+}
