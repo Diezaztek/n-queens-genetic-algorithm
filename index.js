@@ -46,37 +46,43 @@ class Board{
     }
   }
 
-  checkIsValidHorizontal(){
+  evaluateHorizontally(){
+    let points = 0
+
     for(let i = 0; i < this.width; i++){
       let hasQueen = false
       for(let j = 0; j < this.height; j++){
         if(this.board[i][j] == 1 && hasQueen){
-          return false
+          points++
         }else if(this.board[i][j]){
           hasQueen = true
         }
       }
     }
 
-    return true
+    return points
   }
 
-  checkIsValidVertical(){
+  evaluateVertically(){
+    let points = 0
+
     for(let i = 0; i < this.width; i++){
       let hasQueen = false
       for(let j = 0; j < this.height; j++){
         if(this.board[j][i] == 1 && hasQueen){
-          return false
+          points++
         }else if(this.board[j][i]){
           hasQueen = true
         }
       }
     }
 
-    return true
+    return points
   }
 
-  checkIsValidDiagonal(){
+  evaluatePrincipalDiagonal(){
+    let points = 0
+
     let dim = this.width
     for( let k = 0 ; k < dim * 2 ; k++ ) {
       let hasQueen = false
@@ -84,7 +90,7 @@ class Board{
         let i = k - j;
         if( i < dim && j < dim ) {
           if(this.board[i][j] == 1 && hasQueen){
-            return false
+            points++
           }else if(this.board[i][j]){
             hasQueen = true
           }
@@ -92,16 +98,18 @@ class Board{
       }
     }
 
-    return true
+    return points
   }
 
-  checkIsValidInverseDiagonal(){
+  evaluateInverseDiagonal(){
+    let points = 0
+
     for (let n = -this.width; n <= this.width; n++) {
-      hasQueen = false
+      let hasQueen = false
       for(let i = 0; i < this.height; i++){
         if((i-n>=0)&&(i-n < this.height)){
           if(this.board[i][i-n] == 1 && hasQueen){
-            return false
+            points++
           }else if(this.board[i][i-n]){
             hasQueen = true
           }
@@ -109,16 +117,17 @@ class Board{
       }
     }
 
-    return true
+    return points
   }
 
-  checkIsValid(){
-    return this.checkIsValidHorizontal() &&
-      this.checkIsValidVertical() &&
-      this.checkIsValidDiagonal() &&
-      this.checkIsValidInverseDiagonal()
+  calculateScore(){
+    return [this.evaluateVertically(),
+      this.evaluateHorizontally(),
+      this.evaluatePrincipalDiagonal(),
+      this.evaluateInverseDiagonal()]
   }
 }
 
 myBoard = new Board(8, 8, 8)
 myBoard.printBoard()
+console.log(myBoard.calculateScore())
