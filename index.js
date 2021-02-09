@@ -28,7 +28,6 @@ class Board{
     for(let i = 0; i < this.numberOfQueens; i++){
       let x = getRandomInt(0, this.numberOfQueens - 1)
       let y = getRandomInt(0, this.numberOfQueens - 1)
-      console.log(x, y)
       if(this.board[x][y] == 1){
         i--
       }else{
@@ -48,9 +47,9 @@ class Board{
   }
 
   checkIsValidHorizontal(){
-    for(let i = 0; i < this.board.length; i++){
+    for(let i = 0; i < this.width; i++){
       let hasQueen = false
-      for(let j = 0; j < this.board.length; j++){
+      for(let j = 0; j < this.height; j++){
         if(this.board[i][j] == 1 && hasQueen){
           return false
         }else if(this.board[i][j]){
@@ -63,9 +62,9 @@ class Board{
   }
 
   checkIsValidVertical(){
-    for(let i = 0; i < this.board.length; i++){
+    for(let i = 0; i < this.width; i++){
       let hasQueen = false
-      for(let j = 0; j < this.board.length; j++){
+      for(let j = 0; j < this.height; j++){
         if(this.board[j][i] == 1 && hasQueen){
           return false
         }else if(this.board[j][i]){
@@ -78,7 +77,7 @@ class Board{
   }
 
   checkIsValidDiagonal(){
-    let dim = this.board.length
+    let dim = this.width
     for( let k = 0 ; k < dim * 2 ; k++ ) {
       let hasQueen = false
       for( let j = 0 ; j <= k ; j++ ) {
@@ -97,10 +96,10 @@ class Board{
   }
 
   checkIsValidInverseDiagonal(){
-    for (let n = -this.board.length; n <= this.board.length; n++) {
+    for (let n = -this.width; n <= this.width; n++) {
       hasQueen = false
-      for(let i = 0; i < this.board.length; i++){
-        if((i-n>=0)&&(i-n < thisboard.length)){
+      for(let i = 0; i < this.height; i++){
+        if((i-n>=0)&&(i-n < this.height)){
           if(this.board[i][i-n] == 1 && hasQueen){
             return false
           }else if(this.board[i][i-n]){
