@@ -9,15 +9,29 @@ class Board{
     this.height = height
 
     if(parentA == undefined && parentB == undefined){
-      this.createBoard()
+      this.createEmptyBoard()
       this.positionateRandomQueens()
+      console.log(this.board)
+    }else{
+      this.createMergedBoard(parentA, parentB)
     }
   }
 
-  createBoard(){
+  createEmptyBoard(){
      this.board = new Array(this.width).fill(0).map(() =>
         new Array(this.height).fill(0)
       )
+  }
+
+  createMergedBoard(parentA, parentB){
+    this.board = []
+    for(let i = 0; i < this.width / 2; i++){
+      this.board.push(parentA[i].slice())
+    }
+
+    for(let i = this.width/2; i < this.width; i++){
+      this.board.push(parentB[i].slice())
+    }
   }
 
   positionateRandomQueens(){
