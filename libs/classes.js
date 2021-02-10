@@ -9,48 +9,80 @@ class Board{
     this.height = height
 
     if(parentA == undefined && parentB == undefined){
-      this.createEmptyBoard()
-      this.positionateRandomQueens()
-      console.log(this.board)
+      this.createRandomGenes()
     }else{
-      this.createMergedBoard(parentA, parentB)
-    }
-  }
-
-  createEmptyBoard(){
-     this.board = new Array(this.width).fill(0).map(() =>
-        new Array(this.height).fill(0)
-      )
-  }
-
-  createMergedBoard(parentA, parentB){
-    this.board = []
-    for(let i = 0; i < this.width / 2; i++){
-      this.board.push(parentA[i].slice())
+      this.createMixedGenes(parentA, parentB)
     }
 
-    for(let i = this.width/2; i < this.width; i++){
-      this.board.push(parentB[i].slice())
-    }
+    this.createBoard()
   }
 
-  positionateRandomQueens(){
-    for(let i = 0; i < this.numberOfQueens; i++){
-      let x = getRandomInt(0, this.numberOfQueens - 1)
-      let y = getRandomInt(0, this.numberOfQueens - 1)
-      if(this.board[x][y] == 1){
+  createRandomGenes(){
+    this.genes = []
+    for(let i = 0; i < this.height; i++){
+      let randomPosition = getRandomInt(0, this.numberOfQueens - 1)
+      if(this.genes.includes(randomPosition)){
         i--
-      }else{
-        this.board[x][y] = 1
+        continue
       }
+      this.genes.push(randomPosition)
+    }
+  }
+
+  createMixedGenes(parentA, parentB){
+    this.genes = new Array(this.numberOfQueens).fill(-1)
+
+    let lowerCrossOverIndex = getRandomInt(0, this.numberOfQueens - 2)
+    let upperCrossOverIndex = getRandomInt(lowerCrossOverIndex + 1, this.numberOfQueens - 1)
+
+    for(let i = lowerCrossOverIndex; i < upperCrossOverIndex + 1; i++ ){
+      this.genes[i] = parentA[i]
+    }
+
+    for(let i = 0; i < this.numberOfQueens; i++){
+      if(this.genes[i] < 0){
+        for(let j = 0; j < parentB.length; j++){
+          if(!this.genes.includes(parentB[j])){
+            this.genes[i] = parentB[j]
+            break
+          }else{
+            console.log()
+          }
+        }
+      }
+    }
+  }
+
+  mutate(){
+    let firstRandomIndex = getRandomInt(0, this.numberOfQueens - 1)
+    let secondRandomIndex = getRandomInt(0, this.numberOfQueens - 1)
+
+    let aux = this.genes[firstRandomIndex]
+    this.genes[firstRandomIndex] = this.genes[secondRandomIndex]
+    this.genes[secondRandomIndex] = aux
+  }
+
+
+  createBoard(){
+    this.board = []
+    for(let i = 0; i < this.height; i++){
+      let row = []
+      for(let j = 0; j < this.width; j++){
+        if(j == this.genes[i]){
+          row.push(1)
+        }else{
+          row.push(0)
+        }
+      }
+      this.board.push(row)
     }
   }
 
   printBoard(){
     for(let i = 0; i < this.width; i++){
-      let row = "|"
+      let row = ""
       for(let j = 0; j < this.height; j++){
-        row += ` ${this.board[i][j]} |`
+        row += ` ${this.board[i][j]} `
       }
       console.log(row)
     }
