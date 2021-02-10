@@ -88,40 +88,6 @@ class Board{
     }
   }
 
-  evaluateHorizontally(){
-    let points = 0
-
-    for(let i = 0; i < this.width; i++){
-      let hasQueen = false
-      for(let j = 0; j < this.height; j++){
-        if(this.board[i][j] == 1 && hasQueen){
-          points++
-        }else if(this.board[i][j]){
-          hasQueen = true
-        }
-      }
-    }
-
-    return points
-  }
-
-  evaluateVertically(){
-    let points = 0
-
-    for(let i = 0; i < this.width; i++){
-      let hasQueen = false
-      for(let j = 0; j < this.height; j++){
-        if(this.board[j][i] == 1 && hasQueen){
-          points++
-        }else if(this.board[j][i]){
-          hasQueen = true
-        }
-      }
-    }
-
-    return points
-  }
-
   evaluatePrincipalDiagonal(){
     let points = 0
 
@@ -163,9 +129,7 @@ class Board{
   }
 
   calculateScore(){
-    return this.evaluateVertically() +
-      this.evaluateHorizontally() +
-      this.evaluatePrincipalDiagonal() +
+    return this.evaluatePrincipalDiagonal() +
       this.evaluateInverseDiagonal()
   }
 }
