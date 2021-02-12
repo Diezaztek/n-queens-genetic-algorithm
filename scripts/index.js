@@ -24,7 +24,7 @@ $( document ).ready(function() {
       break
     }
 
-    newGeneration = []
+    let newGeneration = []
 
     //Elitism: 10% of the best goes to next generation
     subPopulationSize = Math.trunc(10*POPULATION_SIZE/100)
