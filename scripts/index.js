@@ -5,7 +5,7 @@ const NUMBER_OF_QUEENS = 8
 const BOARD_WIDHT = 8
 const BOARD_HEIGHT = 8
 
-let generations = 0
+let generations = 1
 
 let population = []
 for(let i = 0; i < POPULATION_SIZE; i++){
@@ -69,13 +69,11 @@ $( document ).ready(function() {
     positions[`${meaning[genes[i]]}${genes.length-i}`] = 'wQ'
   }
 
-
-  console.log(positions)
+  $('#numberOfGenerationsNeeded').text(generations)
+  $('#genes').text(genes)
 
   var board = Chessboard('myBoard', positions)
-  console.log(genes)
 
   console.log("Solution found: ")
   population[0].printBoard()
-  console.log(`Generations needed: ${generations}`)
 });

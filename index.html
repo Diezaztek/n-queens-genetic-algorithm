@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>N Queens Solver</title>
+    <title>8 Queens Solver</title>
     <link rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -20,7 +20,7 @@
           <a href="#" class="navbar-brand d-flex align-items-center">
             <i class="fas fa-chess-queen"></i>
             &nbsp;
-            <strong> N Queens Solver</strong>
+            <strong> 8 Queens Solver</strong>
           </a>
         </div>
       </div>
@@ -29,12 +29,12 @@
       <section class="jumbotron text-center" id="settings">
         <div class="container">
           <h1 class="jumbotron-heading">N queens problem solver</h1>
-          <p class="lead text-muted">This page uses a genetic algorithm to solve the n queens problem. For start select the quantity of queens you want to place in an N x N board. Then click on calculate</p>
+          <p class="lead text-muted">This page uses a genetic algorithm to solve the 8 queens problem. Click on calculate for computing a new solution</p>
           <form>
-            <div class="form-group">
+          <!--  <div class="form-group">
               <label for="exampleInputEmail1">Number of queens</label>
               <input type="number" min="4" max="12" step="1" class="form-control" id="numberofQueens" placeholder="Enter a number between 4 and 12">
-            </div>
+            </div> -->
             <button type="submit" class="btn btn-primary">Calculate</button>
           </form>
         </div>
@@ -55,15 +55,22 @@
               margin-left: auto;
               margin-right: auto;"
               ></div>
+              <hr>
+              <p class="card-text">Genotipe: <span id="genes"></span></p>
             </div>
             <div class="card-footer text-muted">
-              n generations needed
+              Generations needed: <span id="numberOfGenerationsNeeded"></span>
             </div>
           </div>
 
 
         </div>
       </section>
+
+      <br>
+      <footer>
+        
+      </footer>
 
 </body>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
