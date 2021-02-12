@@ -28,50 +28,20 @@
 
       <section class="jumbotron text-center" id="settings">
         <div class="container">
-          <h1 class="jumbotron-heading">N queens problem solver</h1>
+          <h1 class="jumbotron-heading">8 queens problem solver</h1>
           <p class="lead text-muted">This page uses a genetic algorithm to solve the 8 queens problem. Click on calculate for computing a new solution</p>
-          <form>
+          <form id="boardConfiguration">
           <!--  <div class="form-group">
               <label for="exampleInputEmail1">Number of queens</label>
               <input type="number" min="4" max="12" step="1" class="form-control" id="numberofQueens" placeholder="Enter a number between 4 and 12">
             </div> -->
-            <button type="submit" class="btn btn-primary">Calculate</button>
+            <button id="calculateButton" type="submit" class="btn btn-primary">Calculate</button>
           </form>
         </div>
       </section>
 
       <section id="results">
-        <div class="container">
-          <br>
-
-          <div class="card text-center">
-            <div class="card-header">
-              Solution found!
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Fenotipe</h5>
-              <div id="myBoard" style="width: 400px;
-              text-align:center
-              display: block;
-              margin-left: auto;
-              margin-right: auto;"
-              ></div>
-              <hr>
-              <h5 class="card-title">Genotipe</h5>
-              <p class="card-text"><span id="genes"></span></p>
-            </div>
-            <div class="card-footer text-muted">
-              Generations needed: <span id="numberOfGenerationsNeeded"></span>
-            </div>
-          </div>
-
-          <hr>
-          <div class="container" id="resultDetails">
-            <h2>Result details</h2>
-            <br>
-          </div>
-
-        </div>
+        
 
       </section>
 
