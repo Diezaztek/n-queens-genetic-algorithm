@@ -1,4 +1,4 @@
-const { getRandomInt } = require("./utils");
+import { getRandomInt } from "./utils.js";
 
 class Board{
 
