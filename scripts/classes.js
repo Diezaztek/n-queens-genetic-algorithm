@@ -14,7 +14,6 @@ class Board{
       this.createMixedGenes(parentA, parentB)
     }
 
-    this.createBoard()
   }
 
   createRandomGenes(){
@@ -61,11 +60,11 @@ class Board{
     this.genes[firstRandomIndex] = this.genes[secondRandomIndex]
     this.genes[secondRandomIndex] = aux
 
-    this.createBoard()
   }
 
 
   createBoard(){
+    this.createBoard()
     this.board = []
     for(let i = 0; i < this.height; i++){
       let row = []
