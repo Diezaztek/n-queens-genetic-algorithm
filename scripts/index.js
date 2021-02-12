@@ -158,15 +158,18 @@ $( document ).ready(function() {
 
 $('#calculateButton').click(function(e) {
   e.preventDefault()
+  $('#calculateButton').attr("disabled", true)
   $('#spinnerLoad').addClass('pl pl-puzzle')
   let numberOfQueens = parseInt($('#numberOfQueens').val())
   if(isNaN(numberOfQueens)){
     alert("Select a valid value")
     $('#spinnerLoad').removeClass('pl pl-puzzle')
+    $('#calculateButton').attr("disabled", false)
   }else{
     $('#results').empty()
     setTimeout(function () {
       let results = calculateResult(numberOfQueens)
+      $('#calculateButton').attr("disabled", false)
       $('#spinnerLoad').removeClass('pl pl-puzzle')
       displayResult(numberOfQueens, results[0], results[1], results[2])
     }, 2000);
