@@ -7,7 +7,6 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous">
-    <link rel="stylesheet" href="vendor/chessboardjs-1.0.0/css/chessboard-1.0.0.min.css">
     <link rel="stylesheet" href="/styles/master.css">
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
@@ -31,10 +30,10 @@
           <h1 class="jumbotron-heading">8 queens problem solver</h1>
           <p class="lead text-muted">This page uses a genetic algorithm to solve the 8 queens problem. Click on calculate for computing a new solution</p>
           <form id="boardConfiguration">
-          <!--  <div class="form-group">
+            <div class="form-group">
               <label for="exampleInputEmail1">Number of queens</label>
-              <input type="number" min="4" max="12" step="1" class="form-control" id="numberofQueens" placeholder="Enter a number between 4 and 12">
-            </div> -->
+              <input type="number" min="4" max="12" step="1" class="form-control" id="numberOfQueens" placeholder="Enter a number between 4 and 12" required>
+            </div>
             <button id="calculateButton" type="submit" class="btn btn-primary">Calculate</button>
           </form>
         </div>
@@ -64,9 +63,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
   crossorigin="anonymous"></script>
-
-  <script type="text/javascript" src="vendor/chessboardjs-1.0.0/js/chessboard-1.0.0.min.js">
-  </script>
 
   <script type="module" src="scripts/index.js">
 

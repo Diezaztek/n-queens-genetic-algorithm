@@ -1,8 +1,8 @@
 import { Board } from "./classes.js";
 
 
-function displayResult(solution, generations, generationsNumber){
-  $('#results').append(`<div class="container">
+function displayResult(queens, solution, generations, generationsNumber){
+  let resultHTML = `<div class="container">
                           <br>
 
                           <div class="card text-center">
@@ -11,92 +11,91 @@ function displayResult(solution, generations, generationsNumber){
                             </div>
                             <div class="card-body">
                               <h5 class="card-title">Phenotype</h5>
-                              <div id="myBoard" style="width: 400px;
-                              text-align:center
-                              display: block;
-                              margin-left: auto;
-                              margin-right: auto;"
-                              ></div>
-                              <hr>
-                              <h5 class="card-title">Genotype</h5>
-                              <p class="card-text"><span id="genes"></span></p>
+                              <table class="chessboard">`
+
+  for(let i = 0; i < queens; i++){
+    resultHTML += `<tr class="chessboard">`
+    for(let j = 0; j < queens; j++){
+      resultHTML += `<td id=${i+1}-${j+1} class="chessboard"></td>`
+    }
+    resultHTML += '</tr>'
+  }
+
+  resultHTML += `         </table>
+                            <hr>
+                            <h5 class="card-title">Genotype</h5>
+                            <p class="card-text"><span id="genes"></span></p>
                             </div>
                             <div class="card-footer text-muted">
-                              Generations needed: <span id="numberOfGenerationsNeeded"></span>
+                            Generations needed: <span id="numberOfGenerationsNeeded"></span>
                             </div>
-                          </div>
+                            </div>
 
-                          <hr>
-                          <div class="container" id="resultDetails">
-                            <h2>Result details</h2>
-                            <br>
-                          </div>
+                            <hr>
+                            <div class="container" id="resultDetails">
+                              <h2>Result details</h2>
+                              <br>
+                            </div>
+                      </div>`
+  $('#results').append(resultHTML)
 
-                        </div>`)
 
+  let genes = solution.genes.slice()
+  for(let i = 0; i < genes.length; i++){
+    $(`#${i+1}-${genes[i]+1}`).append(`<img src="images/wQ.png" class="img-fluid" alt="Responsive image">`)
+  }
 
-    let genes = solution.genes.slice()
-    let meaning = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    let positions = {
+  $('#numberOfGenerationsNeeded').text(generationsNumber)
+  $('#genes').text(`[${genes}]`)
+
+  let resultDetailsDOM = $('#resultDetails')
+  for(let i = 0; i < generations.length; i++){
+    let tableHTML = ` <div class="showDetails" data-toggle="collapse" href="#details${i+1}"
+                        type="button" role="button" aria-expanded="false"
+                        aria-controls="details${i+1}">
+                        <h4 style="display:inline"> Generation ${i+1} </h4>
+                        &nbsp;
+                        <i class="fa-lg fas fa-caret-down"></i>
+                      </div>
+                        <div class="collapse" id="details${i+1}">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Position</th>
+                                <th scope="col">Score</th>
+                                <th scope="col">Genotype</th>
+                              </tr>
+                            </thead>
+                            <tbody>`
+    for(let j = 0; j < generations[i].length; j++){
+      tableHTML += `<tr>
+                      <th scope="row">${j+1}</th>
+                      <td>${generations[i][j].score}</td>
+                      <td>[${generations[i][j].genes}]</td>
+                    </tr>`
     }
-    for(let i = 0; i < genes.length; i++){
-      positions[`${meaning[genes[i]]}${genes.length-i}`] = 'wQ'
-    }
 
-    $('#numberOfGenerationsNeeded').text(generationsNumber)
-    $('#genes').text(`[${genes}]`)
+    tableHTML += `  </tbody>
+                  </table>
+                </div>
+                <br>`
 
-    var board = Chessboard('myBoard', positions)
-
-    let resultDetailsDOM = $('#resultDetails')
-    for(let i = 0; i < generations.length; i++){
-      let tableHTML = ` <div class="showDetails" data-toggle="collapse" href="#details${i+1}"
-                          type="button" role="button" aria-expanded="false"
-                          aria-controls="details${i+1}">
-                          <h4 style="display:inline"> Generation ${i+1} </h4>
-                          &nbsp;
-                          <i class="fa-lg fas fa-caret-down"></i>
-                        </div>
-                          <div class="collapse" id="details${i+1}">
-                          <table class="table">
-                              <thead>
-                                <tr>
-                                  <th scope="col">Position</th>
-                                  <th scope="col">Score</th>
-                                  <th scope="col">Genotype</th>
-                                </tr>
-                              </thead>
-                              <tbody>`
-      for(let j = 0; j < generations[i].length; j++){
-        tableHTML += `<tr>
-                        <th scope="row">${j+1}</th>
-                        <td>${generations[i][j].score}</td>
-                        <td>[${generations[i][j].genes}]</td>
-                      </tr>`
-      }
-
-      tableHTML += `  </tbody>
-                    </table>
-                  </div>
-                  <br>`
-
-      $('#resultDetails').append(tableHTML)
-    }
+    $('#resultDetails').append(tableHTML)
+  }
 }
 
 
-function calculateResult(){
+function calculateResult(numberOfQueens){
   const POPULATION_SIZE = 100
-  const NUMBER_OF_QUEENS = 8
-  const BOARD_WIDHT = 8
-  const BOARD_HEIGHT = 8
+  let boardWidth = numberOfQueens
+  let boardHeight = numberOfQueens
 
   let generations = 1
 
   let population = []
   let historicalPopulation = []
   for(let i = 0; i < POPULATION_SIZE; i++){
-    population.push(new Board(NUMBER_OF_QUEENS,BOARD_WIDHT,BOARD_HEIGHT))
+    population.push(new Board(numberOfQueens,boardWidth,boardHeight))
   }
 
   while(true){
@@ -132,9 +131,9 @@ function calculateResult(){
       let parentA = moreAdaptedParents[Math.floor(Math.random() * moreAdaptedParents.length)].genes
       let parentB = moreAdaptedParents[Math.floor(Math.random() * moreAdaptedParents.length)].genes
 
-      let newBoard = new Board(NUMBER_OF_QUEENS,
-                                  BOARD_WIDHT,
-                                  BOARD_HEIGHT,
+      let newBoard = new Board(numberOfQueens,
+                                  boardWidth,
+                                  boardHeight,
                                   parentA,
                                   parentB)
       let probabilityMutate = Math.random()
@@ -160,11 +159,18 @@ $( document ).ready(function() {
 $('#calculateButton').click(function(e) {
   e.preventDefault()
   $('#spinnerLoad').addClass('pl pl-puzzle')
-  $('#results').empty()
-  setTimeout(function () {
-    let results = calculateResult()
+  let numberOfQueens = parseInt($('#numberOfQueens').val())
+  if(isNaN(numberOfQueens)){
+    alert("Select a valid value")
     $('#spinnerLoad').removeClass('pl pl-puzzle')
-    displayResult(results[0], results[1], results[2])
-  }, 2000);
+  }else{
+    $('#results').empty()
+    setTimeout(function () {
+      let results = calculateResult(numberOfQueens)
+      $('#spinnerLoad').removeClass('pl pl-puzzle')
+      displayResult(numberOfQueens, results[0], results[1], results[2])
+    }, 2000);
+  }
+
 
 });
