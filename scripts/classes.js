@@ -131,6 +131,8 @@ class Board{
   }
 
   calculateScore(){
+    this.score = this.evaluatePrincipalDiagonal() +
+      this.evaluateInverseDiagonal()
     return this.evaluatePrincipalDiagonal() +
       this.evaluateInverseDiagonal()
   }

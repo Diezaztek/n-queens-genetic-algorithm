@@ -8,6 +8,7 @@ const BOARD_HEIGHT = 8
 let generations = 1
 
 let population = []
+let historicalPopulation = []
 for(let i = 0; i < POPULATION_SIZE; i++){
   population.push(new Board(NUMBER_OF_QUEENS,BOARD_WIDHT,BOARD_HEIGHT))
 }
@@ -18,6 +19,8 @@ $( document ).ready(function() {
     population.sort(function(a, b) {
         return a.calculateScore() - b.calculateScore();
     });
+
+    historicalPopulation.push(population)
 
     //Evaluate if the goal is reached
     if(population[0].calculateScore() == 0){
@@ -73,4 +76,40 @@ $( document ).ready(function() {
   $('#genes').text(`[${genes}]`)
 
   var board = Chessboard('myBoard', positions)
+
+  let resultDetailsDOM = $('#resultDetails')
+  for(let i = 0; i < historicalPopulation.length; i++){
+    let tableHTML = ` <div class="showDetails" data-toggle="collapse" href="#details${i+1}"
+                        type="button" role="button" aria-expanded="false"
+                        aria-controls="details${i+1}">
+                        <h4 style="display:inline"> Generation ${i+1} </h4>
+                        &nbsp;
+                        <i class="fa-lg fas fa-caret-down"></i>
+                      </div>
+                        <div class="collapse" id="details${i+1}">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Position</th>
+                                <th scope="col">Score</th>
+                                <th scope="col">Genome</th>
+                              </tr>
+                            </thead>
+                            <tbody>`
+    for(let j = 0; j < historicalPopulation[i].length; j++){
+      tableHTML += `<tr>
+                      <th scope="row">${j+1}</th>
+                      <td>${historicalPopulation[i][j].score}</td>
+                      <td>[${historicalPopulation[i][j].genes}]</td>
+                    </tr>`
+    }
+
+    tableHTML += `  </tbody>
+                  </table>
+                </div>
+                <br>`
+
+    $('#resultDetails').append(tableHTML)
+  }
+
 });
