@@ -63,6 +63,7 @@ function displayResult(queens, solution, generations, generationsNumber){
                               <tr>
                                 <th scope="col">Position</th>
                                 <th scope="col">Score</th>
+                                <th scope="col">Generation</th>
                                 <th scope="col">Genotype</th>
                               </tr>
                             </thead>
@@ -71,6 +72,7 @@ function displayResult(queens, solution, generations, generationsNumber){
       tableHTML += `<tr>
                       <th scope="row">${j+1}</th>
                       <td>${generations[i][j].score}</td>
+                      <td>${generations[i][j].generation}</td>
                       <td>[${generations[i][j].genes}]</td>
                     </tr>`
     }
@@ -95,7 +97,7 @@ function calculateResult(numberOfQueens){
   let population = []
   let historicalPopulation = []
   for(let i = 0; i < POPULATION_SIZE; i++){
-    population.push(new Board(numberOfQueens,boardWidth,boardHeight))
+    population.push(new Board(numberOfQueens,boardWidth,boardHeight, generations))
   }
 
   while(true){
@@ -127,6 +129,8 @@ function calculateResult(numberOfQueens){
       moreAdaptedParents.push(population[i])
     }
 
+    generations++
+
     for(let i = 0; i < subPopulationSize; i++){
       let parentA = moreAdaptedParents[Math.floor(Math.random() * moreAdaptedParents.length)].genes
       let parentB = moreAdaptedParents[Math.floor(Math.random() * moreAdaptedParents.length)].genes
@@ -134,6 +138,7 @@ function calculateResult(numberOfQueens){
       let newBoard = new Board(numberOfQueens,
                                   boardWidth,
                                   boardHeight,
+                                  generations,
                                   parentA,
                                   parentB)
       let probabilityMutate = Math.random()
@@ -143,7 +148,6 @@ function calculateResult(numberOfQueens){
       newGeneration.push(newBoard)
     }
 
-    generations++
     population = newGeneration
 
   }

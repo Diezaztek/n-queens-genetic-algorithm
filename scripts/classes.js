@@ -3,10 +3,11 @@ import { getRandomInt } from "./utils.js";
 class Board{
 
   //Initialize board with the n queens positionated in random places
-  constructor(numberOfqueens, width, height, parentA, parentB){
+  constructor(numberOfqueens, width, height, generation, parentA, parentB){
     this.numberOfQueens = numberOfqueens
     this.width = width
     this.height = height
+    this.generation = generation
 
     if(parentA == undefined && parentB == undefined){
       this.createRandomGenes()
@@ -44,8 +45,6 @@ class Board{
           if(!this.genes.includes(parentB[j])){
             this.genes[i] = parentB[j]
             break
-          }else{
-            console.log()
           }
         }
       }
@@ -64,7 +63,6 @@ class Board{
 
 
   createBoard(){
-    this.createBoard()
     this.board = []
     for(let i = 0; i < this.height; i++){
       let row = []
@@ -130,6 +128,7 @@ class Board{
   }
 
   calculateScore(){
+    this.createBoard()
     this.score = this.evaluatePrincipalDiagonal() +
       this.evaluateInverseDiagonal()
     return this.evaluatePrincipalDiagonal() +
