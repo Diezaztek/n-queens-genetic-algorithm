@@ -27,22 +27,22 @@ $( document ).ready(function() {
     let newGeneration = []
 
     //Elitism: 10% of the best goes to next generation
-    subPopulationSize = Math.trunc(10*POPULATION_SIZE/100)
+    let subPopulationSize = Math.trunc(10*POPULATION_SIZE/100)
     for(let i = 0; i < subPopulationSize; i++){
       newGeneration.push(population[i])
     }
 
     //The remaining will be created fitting the 50% best candidates
     subPopulationSize = Math.trunc(90*POPULATION_SIZE/100)
-    halfPopulationSize = Math.trunc(50*POPULATION_SIZE/100)
-    moreAdaptedParents = []
+    let halfPopulationSize = Math.trunc(50*POPULATION_SIZE/100)
+    let moreAdaptedParents = []
     for(let i = 0; i < halfPopulationSize; i++){
       moreAdaptedParents.push(population[i])
     }
 
     for(let i = 0; i < subPopulationSize; i++){
-      parentA = moreAdaptedParents[Math.floor(Math.random() * moreAdaptedParents.length)].genes
-      parentB = moreAdaptedParents[Math.floor(Math.random() * moreAdaptedParents.length)].genes
+      let parentA = moreAdaptedParents[Math.floor(Math.random() * moreAdaptedParents.length)].genes
+      let parentB = moreAdaptedParents[Math.floor(Math.random() * moreAdaptedParents.length)].genes
 
       let newBoard = new Board(NUMBER_OF_QUEENS,
                                   BOARD_WIDHT,
