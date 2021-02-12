@@ -70,10 +70,7 @@ $( document ).ready(function() {
   }
 
   $('#numberOfGenerationsNeeded').text(generations)
-  $('#genes').text(genes)
+  $('#genes').text(`[${genes}]`)
 
   var board = Chessboard('myBoard', positions)
-
-  console.log("Solution found: ")
-  population[0].printBoard()
 });
