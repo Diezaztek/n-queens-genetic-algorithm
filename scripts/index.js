@@ -1,6 +1,25 @@
 import { Board } from "./classes.js";
 
 
+function createModal(queens, genes){
+  let resultHTML = `<table class="chessboard">`
+
+  for(let i = 0; i < queens; i++){
+    resultHTML += `<tr class="chessboard">`
+    for(let j = 0; j < queens; j++){
+      resultHTML += `<td id=modal-${i+1}-${j+1} class="chessboard"></td>`
+    }
+    resultHTML += '</tr>'
+  }
+
+  resultHTML += `</table>`
+  $('#resultModal').append(resultHTML)
+  for(let i = 0; i < genes.length; i++){
+    $(`#modal-${i+1}-${parseInt(genes[i])+1}`).append(`<img src="images/wQ.png" class="img-fluid" alt="Responsive image">`)
+  }
+}
+
+
 function displayResult(queens, solution, generations, generationsNumber){
   let resultHTML = `<div class="container">
                           <br>
@@ -65,6 +84,7 @@ function displayResult(queens, solution, generations, generationsNumber){
                                 <th scope="col">Score</th>
                                 <th scope="col">Generation</th>
                                 <th scope="col">Genotype</th>
+                                <th scope="col">Phenotype</th>
                               </tr>
                             </thead>
                             <tbody>`
@@ -73,7 +93,12 @@ function displayResult(queens, solution, generations, generationsNumber){
                       <th scope="row">${j+1}</th>
                       <td>${generations[i][j].score}</td>
                       <td>${generations[i][j].generation}</td>
-                      <td>[${generations[i][j].genes}]</td>
+                      <td class="genes">[${generations[i][j].genes}]</td>
+                      <td>
+                        <p class="showModal" type="button" role="button" style="color:#007bff">
+                          Show phenotype
+                        </p>
+                      </td>
                     </tr>`
     }
 
@@ -178,6 +203,24 @@ $('#calculateButton').click(function(e) {
       displayResult(numberOfQueens, results[0], results[1], results[2])
     }, 2000);
   }
+
+
+});
+
+$(document).on('click', '.showModal', function(){
+  var genes = $(this).closest("tr")
+                       .find(".genes")
+                       .text()
+                       .replace('[', '')
+                       .replace(']', '')
+                       .split(',')
+  let numberOfQueens = parseInt($('#numberOfQueens').val())
+
+  $('#resultModal').empty()
+  createModal(numberOfQueens, genes)
+  $('#detailModal').modal('toggle');
+
+
 
 
 });
