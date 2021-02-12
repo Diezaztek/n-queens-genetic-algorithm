@@ -159,7 +159,12 @@ $( document ).ready(function() {
 
 $('#calculateButton').click(function(e) {
   e.preventDefault()
+  $('#spinnerLoad').addClass('pl pl-puzzle')
   $('#results').empty()
-  let results = calculateResult()
-  displayResult(results[0], results[1], results[2])
+  setTimeout(function () {
+    let results = calculateResult()
+    $('#spinnerLoad').removeClass('pl pl-puzzle')
+    displayResult(results[0], results[1], results[2])
+  }, 2000);
+
 });
