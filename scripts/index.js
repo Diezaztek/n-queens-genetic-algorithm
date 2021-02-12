@@ -61,18 +61,19 @@ $( document ).ready(function() {
 
   }
 
+  let genes = population[0].genes.slice()
   let meaning = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
   let positions = {
   }
-  for(let i = 0; i < population[0].genes.length; i++){
-    positions[`${meaning[population[0].genes[i]]}${i+1}`] = 'wQ'
+  for(let i = 0; i < genes.length; i++){
+    positions[`${meaning[genes[i]]}${genes.length-i}`] = 'wQ'
   }
 
 
   console.log(positions)
 
   var board = Chessboard('myBoard', positions)
-  console.log(population[0].genes)
+  console.log(genes)
 
   console.log("Solution found: ")
   population[0].printBoard()

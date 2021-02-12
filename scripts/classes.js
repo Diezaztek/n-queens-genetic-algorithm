@@ -60,6 +60,8 @@ class Board{
     let aux = this.genes[firstRandomIndex]
     this.genes[firstRandomIndex] = this.genes[secondRandomIndex]
     this.genes[secondRandomIndex] = aux
+
+    this.createBoard()
   }
 
 
