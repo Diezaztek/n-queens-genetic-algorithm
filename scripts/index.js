@@ -61,6 +61,19 @@ $( document ).ready(function() {
 
   }
 
+  let meaning = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+  let positions = {
+  }
+  for(let i = 0; i < population[0].genes.length; i++){
+    positions[`${meaning[population[0].genes[i]]}${i+1}`] = 'wQ'
+  }
+
+
+  console.log(positions)
+
+  var board = Chessboard('myBoard', positions)
+  console.log(population[0].genes)
+
   console.log("Solution found: ")
   population[0].printBoard()
   console.log(`Generations needed: ${generations}`)

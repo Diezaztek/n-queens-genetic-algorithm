@@ -7,11 +7,65 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous">
+    <link rel="stylesheet" href="vendor/chessboardjs-1.0.0/css/chessboard-1.0.0.min.css">
+    <link rel="stylesheet" href="/styles/master.css">
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
   </head>
   <body>
 
-  </body>
+    <header>
+      <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <i class="fas fa-chess-queen"></i>
+            &nbsp;
+            <strong> N Queens Solver</strong>
+          </a>
+        </div>
+      </div>
+    </header>
 
+      <section class="jumbotron text-center" id="settings">
+        <div class="container">
+          <h1 class="jumbotron-heading">N queens problem solver</h1>
+          <p class="lead text-muted">This page uses a genetic algorithm to solve the n queens problem. For start select the quantity of queens you want to place in an N x N board. Then click on calculate</p>
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Number of queens</label>
+              <input type="number" min="4" max="12" step="1" class="form-control" id="numberofQueens" placeholder="Enter a number between 4 and 12">
+            </div>
+            <button type="submit" class="btn btn-primary">Calculate</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="results">
+        <div class="container">
+          <br>
+
+          <div class="card text-center">
+            <div class="card-header">
+              Solution found!
+            </div>
+            <div class="card-body">
+              <div id="myBoard" style="width: 400px;
+              text-align:center
+              display: block;
+              margin-left: auto;
+              margin-right: auto;"
+              ></div>
+            </div>
+            <div class="card-footer text-muted">
+              n generations needed
+            </div>
+          </div>
+
+
+        </div>
+      </section>
+
+</body>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
@@ -23,6 +77,9 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
   crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="vendor/chessboardjs-1.0.0/js/chessboard-1.0.0.min.js">
+  </script>
 
   <script type="module" src="scripts/index.js">
 
