@@ -127,6 +127,7 @@ function calculateResult(numberOfQueens){
   }
 
   while(true){
+    //console.log(generations)
     //Sort population by attributes
     population.sort(function(a, b) {
         return a.calculateScore() - b.calculateScore();
@@ -195,12 +196,20 @@ $('#calculateButton').click(function(e) {
     //$('#boardConfiguration').toggle()
   }else{
     $('#results').empty()
+    $('#runningDetails').empty()
+    $('#runningDetails').append(`<p>Calculating solution...</p>`)
     setTimeout(function () {
+      var start = new Date().getTime();
       let results = calculateResult(numberOfQueens)
+      var end = new Date().getTime()
+      var time = end - start
+
+
+      $('#runningDetails').empty()
+      $('#runningDetails').append(`<p>Calculation took ${time/1000} seconds. </p>`)
+      displayResult(numberOfQueens, results[0], results[1], results[2])
       $('#calculateButton').attr("disabled", false)
       $('#spinnerLoad').removeClass('pl pl-puzzle')
-      //$('#boardConfiguration').toggle()
-      displayResult(numberOfQueens, results[0], results[1], results[2])
     }, 2000);
   }
 });

@@ -61,78 +61,25 @@ class Board{
 
   }
 
-
-  createBoard(){
-    this.board = []
-    for(let i = 0; i < this.height; i++){
-      let row = []
-      for(let j = 0; j < this.width; j++){
-        if(j == this.genes[i]){
-          row.push(1)
-        }else{
-          row.push(0)
-        }
-      }
-      this.board.push(row)
-    }
-  }
-
-  printBoard(){
-    for(let i = 0; i < this.width; i++){
-      let row = ""
-      for(let j = 0; j < this.height; j++){
-        row += ` ${this.board[i][j]} `
-      }
-      console.log(row)
-    }
-  }
-
-  evaluatePrincipalDiagonal(){
-    let points = 0
-
-    let dim = this.width
-    for( let k = 0 ; k < dim * 2 ; k++ ) {
-      let hasQueen = false
-      for( let j = 0 ; j <= k ; j++ ) {
-        let i = k - j;
-        if( i < dim && j < dim ) {
-          if(this.board[i][j] == 1 && hasQueen){
-            points++
-          }else if(this.board[i][j]){
-            hasQueen = true
-          }
-        }
-      }
-    }
-
-    return points
-  }
-
-  evaluateInverseDiagonal(){
-    let points = 0
-
-    for (let n = -this.width; n <= this.width; n++) {
-      let hasQueen = false
-      for(let i = 0; i < this.height; i++){
-        if((i-n>=0)&&(i-n < this.height)){
-          if(this.board[i][i-n] == 1 && hasQueen){
-            points++
-          }else if(this.board[i][i-n]){
-            hasQueen = true
-          }
-        }
-      }
-    }
-
-    return points
-  }
-
   calculateScore(){
-    this.createBoard()
-    this.score = this.evaluatePrincipalDiagonal() +
-      this.evaluateInverseDiagonal()
-    return this.evaluatePrincipalDiagonal() +
-      this.evaluateInverseDiagonal()
+    main_diag_frequency = new Array(2 * this.numberOfQueens).fill(0)
+    secondary_diag_frequency = new Array(2 * this.numberOfQueens).fill(0)
+
+    for(let i = 0; i < this.numberOfQueens; i++){
+      main_diag_frequency[this.genes[i] + i] += 1
+      secondary_diag_frequency[this.numberOfQueens - this.genes[i] + i] += 1
+    }
+
+    let conflicts = 0
+    //formula: (N * (N - 1)) / 2
+    for(let i = 0; i < (2 * this.numberOfQueens); i++){
+      if(i < n){
+        conflicts += (main_diag_frequency[i] * (main_diag_frequency[i]-1)) / 2
+        conflicts += (secondary_diag_frequency[i] * (secondary_diag_frequency[i]-1)) / 2
+      }
+    }
+
+    return conflicts
   }
 }
 
