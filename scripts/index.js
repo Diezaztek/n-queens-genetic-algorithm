@@ -75,7 +75,7 @@ function displayResult(queens, solution, generations, generationsNumber){
                         <i class="fa-lg fas fa-caret-down"></i>
                         &nbsp;
                         <h4 style="display:inline"> Generation ${i+1} </h4>
-              
+
                       </div>
                         <div class="collapse" id="details${i+1}">
                         <table class="table">
@@ -185,18 +185,21 @@ function calculateResult(numberOfQueens){
 $('#calculateButton').click(function(e) {
   e.preventDefault()
   $('#calculateButton').attr("disabled", true)
+  //$('#boardConfiguration').toggle()
   $('#spinnerLoad').addClass('pl pl-puzzle')
   let numberOfQueens = parseInt($('#numberOfQueens').val())
   if(isNaN(numberOfQueens)){
     alert("Select a valid value")
     $('#spinnerLoad').removeClass('pl pl-puzzle')
     $('#calculateButton').attr("disabled", false)
+    //$('#boardConfiguration').toggle()
   }else{
     $('#results').empty()
     setTimeout(function () {
       let results = calculateResult(numberOfQueens)
       $('#calculateButton').attr("disabled", false)
       $('#spinnerLoad').removeClass('pl pl-puzzle')
+      //$('#boardConfiguration').toggle()
       displayResult(numberOfQueens, results[0], results[1], results[2])
     }, 2000);
   }
