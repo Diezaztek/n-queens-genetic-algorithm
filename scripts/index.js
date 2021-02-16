@@ -181,10 +181,6 @@ function calculateResult(numberOfQueens){
 
 }
 
-$( document ).ready(function() {
-
-});
-
 $('#calculateButton').click(function(e) {
   e.preventDefault()
   $('#calculateButton').attr("disabled", true)
@@ -203,9 +199,8 @@ $('#calculateButton').click(function(e) {
       displayResult(numberOfQueens, results[0], results[1], results[2])
     }, 2000);
   }
-
-
 });
+
 
 $(document).on('click', '.showModal', function(){
   var genes = $(this).closest("tr")
@@ -220,7 +215,13 @@ $(document).on('click', '.showModal', function(){
   createModal(numberOfQueens, genes)
   $('#detailModal').modal('toggle');
 
+});
 
-
+$(document).on('click', '.showDetails', function(){
+  if($(this).find('svg').attr('class') == 'svg-inline--fa fa-caret-down fa-w-10 fa-lg'){
+    $(this).find('svg').attr('class', 'svg-inline--fa fa-caret-right fa-w-10 fa-lg')
+  }else{
+    $(this).find('svg').attr('class', 'svg-inline--fa fa-caret-down fa-w-10 fa-lg')
+  }
 
 });
