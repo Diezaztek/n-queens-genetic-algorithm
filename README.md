@@ -29,7 +29,7 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">problem-description</a></li>
+        <li><a href="#problem-description">Problem Description</a></li>
         <li><a href="#algorithm-intuition">Algorithm intuition</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
@@ -57,7 +57,50 @@
 
 ### Problem Description
 
+The N Queen is the problem of placing N chess queens on an N×N chessboard so that no two queens attack each other. For example an 4 queen problem solution would look something like this:
+
+![4x4 Board Solution Screenshot][4-4-board-solution-screenshot]
+
+The problem itself has the constrain that the minimum amount of queens that can be placed is 4
+
 ### Algorithm Intuition
+
+For solving this problem, a genetic algorithm approach was chosen. The abstraction made was the following:
+* **Individual:** NxN board with N queens placed
+* **Population:** Set of M boards
+* **Phenotype:** The representation of the board and the queens placed
+* **Genotype:** A one dimensional array  with a length of N. In which each position represents the row number, and the content the column number.
+
+For example, the Genotype [1, 3, 0 , 2] represents the following phenotype
+![4x4 Board Solution Screenshot][4-4-board-solution-screenshot]
+
+>The array is 0-index based
+
+The abstraction in code of the board can be found in the [scripts/classes.js](https://github.com/Diezaztek/n-queens-genetic-algorithm/blob/main/scripts/classes.js) file as the Board class
+
+After the problem abstraction a pseudo algorithm was made for solving the problem as follows
+
+```
+1. Declare an initial M population size
+2. Declare queens to be placed N
+3. Create M boards with N random queens placed
+with the constraint that only one queen per row
+and column
+4. while true
+  5. Order the population based on the quantity of
+  queens that attack each other, the less the better
+  6. if the first element punctuation == 0
+    7. break the cycle and return the solution
+  8. Get the first 10% of the population and pass it to the next generation
+  9. The first 50% of population will be the parents of the new boards
+  10. Select two random parents of the valid ones and merge them to create
+  a new board (random genes from the parent A will be passed to the child
+  and the remaining ones will be taken form the parent B)
+  11. With the probability of 10% the new board will mutate (exchange two genes from order)
+  12. The population is now set to the new generation
+```
+
+This implementation can be found in [scripts/index.js](https://github.com/Diezaztek/n-queens-genetic-algorithm/blob/main/scripts/index.js) in the calculateResult method
 
 ### Built With
 
@@ -75,8 +118,27 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
+You need a webserver to run the application. If you have python installed in your system you can just use the [http.server module](https://docs.python.org/3/library/http.server.html#module-http.server)
+
+```sh
+python -m http.server 8000
+```
 
 ### Installation
+
+1. Clone the repository
+```sh
+git clone https://github.com/Diezaztek/n-queens-genetic-algorithm.git
+```
+2. Change to the project folder
+```sh
+cd n-queens-genetic-algorithm
+```
+3. Run your webserver (for example)
+```sh
+python -m http.server 8000
+```
+4. Enter in your browser to the URL http://localhost:8000
 
 
 
@@ -84,6 +146,11 @@ To get a local copy up and running follow these simple example steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+For using the application you just need to enter a valid N value in the input field, then just press calculate
+
+![App screenshot][app-screenshot]
+
+Theorically the max amount of queens you can calculate depends no the process power of your CPU, it has a limit of 75 as it was the maximum number of queens that could be placed in a few minutes
 
 
 <!-- ROADMAP -->
@@ -135,3 +202,5 @@ Project Link: [https://github.com/Diezaztek/n-queens-genetic-algorithm](https://
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
+[4-4-board-solution-screenshot]: images/4-4-board.png
+[app-screenshot]: images/app_screenshot.png
