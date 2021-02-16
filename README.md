@@ -155,7 +155,7 @@ For using the application you just need to enter a valid N value in the input fi
 
 ![App screenshot][app-screenshot]
 
-Theorically the max amount of queens you can calculate depends no the process power of your CPU, it has a limit of 75 as it was the maximum number of queens that could be placed in a few minutes
+Theorically the max amount of queens you can calculate depends no the process power of your CPU, it has a soft limit of 100 but you can try higher results
 
 
 <!-- ROADMAP -->
