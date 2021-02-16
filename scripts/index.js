@@ -72,9 +72,10 @@ function displayResult(queens, solution, generations, generationsNumber){
     let tableHTML = ` <div class="showDetails" data-toggle="collapse" href="#details${i+1}"
                         type="button" role="button" aria-expanded="false"
                         aria-controls="details${i+1}">
-                        <h4 style="display:inline"> Generation ${i+1} </h4>
-                        &nbsp;
                         <i class="fa-lg fas fa-caret-down"></i>
+                        &nbsp;
+                        <h4 style="display:inline"> Generation ${i+1} </h4>
+              
                       </div>
                         <div class="collapse" id="details${i+1}">
                         <table class="table">
