@@ -60,7 +60,7 @@
 The N Queen is the problem of placing N chess queens on an N×N chessboard so that no two queens attack each other. For example an 4 queen problem solution would look something like this:
 
 <p align="center">
-  <img src="images/4-4-board.png" style="width:350px" />
+  <img src="images/4-4-board.png" style="width:200px" />
 </p>
 
 The problem itself has the constrain that the minimum amount of queens that can be placed is 4
