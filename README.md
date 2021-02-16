@@ -60,7 +60,7 @@
 The N Queen is the problem of placing N chess queens on an N×N chessboard so that no two queens attack each other. For example an 4 queen problem solution would look something like this:
 
 <p align="center">
-  <img src="images/4-4-board.png" style="width:200px" />
+  <img src="images/4-4-board.png" width="200" />
 </p>
 
 The problem itself has the constrain that the minimum amount of queens that can be placed is 4
@@ -76,7 +76,7 @@ For solving this problem, a genetic algorithm approach was chosen. The abstracti
 For example, the Genotype [1, 3, 0 , 2] represents the following phenotype
 
 <p align="center">
-  <img src="images/4-4-board.png" style="width:350px" />
+  <img src="images/4-4-board.png" width="300" />
 </p>
 
 >The array is 0-index based
@@ -207,5 +207,4 @@ Project Link: [https://github.com/Diezaztek/n-queens-genetic-algorithm](https://
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[4-4-board-solution-screenshot]: images/4-4-board.png
 [app-screenshot]: images/app_screenshot.png
