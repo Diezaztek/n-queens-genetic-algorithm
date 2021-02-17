@@ -73,7 +73,7 @@ class Board{
     let conflicts = 0
     //formula: (N * (N - 1)) / 2
     for(let i = 0; i < (2 * this.numberOfQueens); i++){
-      if(i < n){
+      if(i < this.numberOfQueens){
         conflicts += (main_diag_frequency[i] * (main_diag_frequency[i]-1)) / 2
         conflicts += (secondary_diag_frequency[i] * (secondary_diag_frequency[i]-1)) / 2
       }
