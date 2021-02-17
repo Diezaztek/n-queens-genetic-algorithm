@@ -79,6 +79,8 @@ class Board{
       }
     }
 
+    this.score = conflicts
+
     return conflicts
   }
 }

@@ -127,7 +127,7 @@ function calculateResult(numberOfQueens){
   }
 
   while(true){
-    //console.log(generations)
+    
     //Sort population by attributes
     population.sort(function(a, b) {
         return a.calculateScore() - b.calculateScore();
