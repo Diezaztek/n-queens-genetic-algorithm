@@ -62,8 +62,8 @@ class Board{
   }
 
   calculateScore(){
-    main_diag_frequency = new Array(2 * this.numberOfQueens).fill(0)
-    secondary_diag_frequency = new Array(2 * this.numberOfQueens).fill(0)
+    let main_diag_frequency = new Array(2 * this.numberOfQueens).fill(0)
+    let secondary_diag_frequency = new Array(2 * this.numberOfQueens).fill(0)
 
     for(let i = 0; i < this.numberOfQueens; i++){
       main_diag_frequency[this.genes[i] + i] += 1
