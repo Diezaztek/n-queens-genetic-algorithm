@@ -207,10 +207,11 @@ $('#calculateButton').click(function(e) {
 
       $('#runningDetails').empty()
       $('#runningDetails').append(`<p>Calculation took ${time/1000} seconds. </p>`)
+      console.log(results[0])
       displayResult(numberOfQueens, results[0], results[1], results[2])
       $('#calculateButton').attr("disabled", false)
       $('#spinnerLoad').removeClass('pl pl-puzzle')
-    }, 2000);
+    }, 1000);
   }
 });
 
