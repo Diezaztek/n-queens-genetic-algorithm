@@ -127,10 +127,10 @@ function calculateResult(numberOfQueens){
   }
 
   while(true){
-    
+
     //Sort population by attributes
     population.sort(function(a, b) {
-        return a.calculateScore() - b.calculateScore();
+        return a.score - b.score;
     });
 
     historicalPopulation.push(population)
@@ -168,10 +168,7 @@ function calculateResult(numberOfQueens){
                                   generations,
                                   parentA,
                                   parentB)
-      let probabilityMutate = Math.random()
-      if(probabilityMutate > 0.1){
-        newBoard.mutate()
-      }
+
       newGeneration.push(newBoard)
     }
 
@@ -186,14 +183,12 @@ function calculateResult(numberOfQueens){
 $('#calculateButton').click(function(e) {
   e.preventDefault()
   $('#calculateButton').attr("disabled", true)
-  //$('#boardConfiguration').toggle()
   $('#spinnerLoad').addClass('pl pl-puzzle')
   let numberOfQueens = parseInt($('#numberOfQueens').val())
   if(isNaN(numberOfQueens)){
     alert("Select a valid value")
     $('#spinnerLoad').removeClass('pl pl-puzzle')
     $('#calculateButton').attr("disabled", false)
-    //$('#boardConfiguration').toggle()
   }else{
     $('#results').empty()
     $('#runningDetails').empty()
@@ -204,13 +199,24 @@ $('#calculateButton').click(function(e) {
       var end = new Date().getTime()
       var time = end - start
 
+      setTimeout(function() {
+        $('#spinnerLoad').removeClass('pl pl-puzzle')
+        $('#runningDetails').empty()
+        $('#spinnerLoad').addClass('pl pl-puzzle')
+        $('#runningDetails').empty()
+        $('#runningDetails').append(`<p>Solution found, you can find the genotype in the console. Printing solution details </p>`)
+        console.log(results[0])
 
-      $('#runningDetails').empty()
-      $('#runningDetails').append(`<p>Calculation took ${time/1000} seconds. </p>`)
-      console.log(results[0])
-      displayResult(numberOfQueens, results[0], results[1], results[2])
-      $('#calculateButton').attr("disabled", false)
-      $('#spinnerLoad').removeClass('pl pl-puzzle')
+        setTimeout(function() {
+          displayResult(numberOfQueens, results[0], results[1], results[2])
+          $('#calculateButton').attr("disabled", false)
+          $('#spinnerLoad').removeClass('pl pl-puzzle')
+          $('#runningDetails').empty()
+          $('#runningDetails').append(`<p>Calculation took ${time/1000} seconds. </p>`)
+        }, 1000)
+
+      }, 100)
+
     }, 1000);
   }
 });

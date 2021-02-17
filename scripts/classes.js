@@ -15,6 +15,8 @@ class Board{
       this.createMixedGenes(parentA, parentB)
     }
 
+    this.score = this.calculateScore()
+
   }
 
   createRandomGenes(){
@@ -49,6 +51,11 @@ class Board{
         }
       }
     }
+
+    let probabilityMutate = Math.random()
+    if(probabilityMutate > 0.1){
+      this.mutate()
+    }
   }
 
   mutate(){
@@ -77,7 +84,6 @@ class Board{
       conflicts += (secondary_diag_frequency[i] * (secondary_diag_frequency[i]-1)) / 2
     }
 
-    this.score = conflicts
 
     return conflicts
   }
