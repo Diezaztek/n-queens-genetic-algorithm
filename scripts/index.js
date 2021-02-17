@@ -1,5 +1,6 @@
 import { Board } from "./classes.js";
 
+let solutionDetails
 
 function createModal(queens, genes){
   let resultHTML = `<table class="chessboard">`
@@ -19,8 +20,55 @@ function createModal(queens, genes){
   }
 }
 
+function displaySolutionDetails(){
+  $('#resultDetails').append(`<h2>Result details</h2>
+                              <br>`)
+  let resultDetailsDOM = $('#resultDetails')
+  for(let i = 0; i < solutionDetails.length; i++){
+    let tableHTML = ` <div class="showDetails" data-toggle="collapse" href="#details${i+1}"
+                        type="button" role="button" aria-expanded="false"
+                        aria-controls="details${i+1}">
+                        <i class="fa-lg fas fa-caret-down"></i>
+                        &nbsp;
+                        <h4 style="display:inline"> Generation ${i+1} </h4>
+                      </div>
+                        <div class="collapse" id="details${i+1}">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Position</th>
+                                <th scope="col">Score</th>
+                                <th scope="col">Generation</th>
+                                <th scope="col">Genotype</th>
+                                <th scope="col">Phenotype</th>
+                              </tr>
+                            </thead>
+                            <tbody>`
+    for(let j = 0; j < solutionDetails[i].length; j++){
+      tableHTML += `<tr>
+                      <th scope="row">${j+1}</th>
+                      <td>${solutionDetails[i][j].score}</td>
+                      <td>${solutionDetails[i][j].generation}</td>
+                      <td class="genes">[${solutionDetails[i][j].genes}]</td>
+                      <td>
+                        <p class="showModal" type="button" role="button" style="color:#007bff">
+                          Show phenotype
+                        </p>
+                      </td>
+                    </tr>`
+    }
 
-function displayResult(queens, solution, generations, generationsNumber){
+    tableHTML += `  </tbody>
+                  </table>
+                </div>
+                <br>`
+
+    $('#resultDetails').append(tableHTML)
+  }
+}
+
+
+function displayResult(queens, solution, generationsNumber){
   let resultHTML = `<div class="container">
                           <br>
 
@@ -50,10 +98,15 @@ function displayResult(queens, solution, generations, generationsNumber){
                             </div>
                             </div>
 
+                            <br>
+                            <div id="showResultDetailsContainer" class="container d-flex justify-content-center">
+                              <button class="btn btn-primary" id="showResultDetailsButton">Show calculations details</button>
+                            </div>
+
                             <hr>
                             <div class="container" id="resultDetails">
-                              <h2>Result details</h2>
-                              <br>
+                              <div id="detailsSpinnerLoad" class=""></div>
+                              <div id="printingDetails" class="container d-flex justify-content-center">
                             </div>
                       </div>`
   $('#results').append(resultHTML)
@@ -67,49 +120,6 @@ function displayResult(queens, solution, generations, generationsNumber){
   $('#numberOfGenerationsNeeded').text(generationsNumber)
   $('#genes').text(`[${genes}]`)
 
-  let resultDetailsDOM = $('#resultDetails')
-  for(let i = 0; i < generations.length; i++){
-    let tableHTML = ` <div class="showDetails" data-toggle="collapse" href="#details${i+1}"
-                        type="button" role="button" aria-expanded="false"
-                        aria-controls="details${i+1}">
-                        <i class="fa-lg fas fa-caret-down"></i>
-                        &nbsp;
-                        <h4 style="display:inline"> Generation ${i+1} </h4>
-
-                      </div>
-                        <div class="collapse" id="details${i+1}">
-                        <table class="table">
-                            <thead>
-                              <tr>
-                                <th scope="col">Position</th>
-                                <th scope="col">Score</th>
-                                <th scope="col">Generation</th>
-                                <th scope="col">Genotype</th>
-                                <th scope="col">Phenotype</th>
-                              </tr>
-                            </thead>
-                            <tbody>`
-    for(let j = 0; j < generations[i].length; j++){
-      tableHTML += `<tr>
-                      <th scope="row">${j+1}</th>
-                      <td>${generations[i][j].score}</td>
-                      <td>${generations[i][j].generation}</td>
-                      <td class="genes">[${generations[i][j].genes}]</td>
-                      <td>
-                        <p class="showModal" type="button" role="button" style="color:#007bff">
-                          Show phenotype
-                        </p>
-                      </td>
-                    </tr>`
-    }
-
-    tableHTML += `  </tbody>
-                  </table>
-                </div>
-                <br>`
-
-    $('#resultDetails').append(tableHTML)
-  }
 }
 
 
@@ -176,7 +186,9 @@ function calculateResult(numberOfQueens){
 
   }
 
-  return [population[0], historicalPopulation, generations]
+  solutionDetails = historicalPopulation
+
+  return [population[0], generations]
 
 }
 
@@ -184,12 +196,16 @@ $('#calculateButton').click(function(e) {
   e.preventDefault()
   $('#calculateButton').attr("disabled", true)
   $('#spinnerLoad').addClass('pl pl-puzzle')
+
   let numberOfQueens = parseInt($('#numberOfQueens').val())
   if(isNaN(numberOfQueens)){
+
     alert("Select a valid value")
     $('#spinnerLoad').removeClass('pl pl-puzzle')
     $('#calculateButton').attr("disabled", false)
+
   }else{
+
     $('#results').empty()
     $('#runningDetails').empty()
     $('#runningDetails').append(`<p>Calculating solution...</p>`)
@@ -198,29 +214,40 @@ $('#calculateButton').click(function(e) {
       let results = calculateResult(numberOfQueens)
       var end = new Date().getTime()
       var time = end - start
+      console.log(results[0])
 
-      setTimeout(function() {
-        $('#spinnerLoad').removeClass('pl pl-puzzle')
-        $('#runningDetails').empty()
-        $('#spinnerLoad').addClass('pl pl-puzzle')
-        $('#runningDetails').empty()
-        $('#runningDetails').append(`<p>Solution found, you can find the genotype in the console. Printing solution details </p>`)
-        console.log(results[0])
-
-        setTimeout(function() {
-          displayResult(numberOfQueens, results[0], results[1], results[2])
-          $('#calculateButton').attr("disabled", false)
-          $('#spinnerLoad').removeClass('pl pl-puzzle')
-          $('#runningDetails').empty()
-          $('#runningDetails').append(`<p>Calculation took ${time/1000} seconds. </p>`)
-        }, 1000)
-
-      }, 100)
+      displayResult(numberOfQueens, results[0], results[1])
+      $('#runningDetails').empty()
+      $('#runningDetails').append(`<p>Calculation took ${time/1000} seconds </p>`)
+      $('#spinnerLoad').removeClass('pl pl-puzzle')
+      $('#calculateButton').attr("disabled", false)
 
     }, 1000);
   }
 });
 
+$(document).on('click', '#showResultDetailsButton', function(){
+  $('#detailsSpinnerLoad').addClass('pl pl-puzzle')
+  $('#showResultDetailsButton').toggle()
+  $('#printingDetails').empty()
+  $('#printingDetails').append(`<p>Printing solution details...</p>`)
+
+  setTimeout(function(){
+    displaySolutionDetails()
+    $('#printingDetails').empty()
+    $('#detailsSpinnerLoad').removeClass('pl pl-puzzle')
+  }, 1000);
+});
+
+
+$(document).on('click', '.showDetails', function(){
+  if($(this).find('svg').attr('class') == 'svg-inline--fa fa-caret-down fa-w-10 fa-lg'){
+    $(this).find('svg').attr('class', 'svg-inline--fa fa-caret-right fa-w-10 fa-lg')
+  }else{
+    $(this).find('svg').attr('class', 'svg-inline--fa fa-caret-down fa-w-10 fa-lg')
+  }
+
+});
 
 $(document).on('click', '.showModal', function(){
   var genes = $(this).closest("tr")
@@ -234,14 +261,5 @@ $(document).on('click', '.showModal', function(){
   $('#resultModal').empty()
   createModal(numberOfQueens, genes)
   $('#detailModal').modal('toggle');
-
-});
-
-$(document).on('click', '.showDetails', function(){
-  if($(this).find('svg').attr('class') == 'svg-inline--fa fa-caret-down fa-w-10 fa-lg'){
-    $(this).find('svg').attr('class', 'svg-inline--fa fa-caret-right fa-w-10 fa-lg')
-  }else{
-    $(this).find('svg').attr('class', 'svg-inline--fa fa-caret-down fa-w-10 fa-lg')
-  }
 
 });
